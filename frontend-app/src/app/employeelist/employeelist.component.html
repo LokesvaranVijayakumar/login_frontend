@@ -1,0 +1,179 @@
+<div class="container">
+  <div class="row my-4">
+    <div class="col">
+      <h3 class="text-center mb-2">Employee List</h3>
+      <button
+        class="btn btn-success mb-4 float-end"
+        data-bs-toggle="modal"
+        data-bs-target="#addEmployeeModal"
+      >
+        Add Employee
+      </button>
+      <table class="table table-light table-striped table-hover">
+        <thead class="table-dark">
+          <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let employee of employee">
+            <td>{{ employee.id }}</td>
+            <td>{{ employee.name }}</td>
+            <td>{{ employee.emailId }}</td>
+            <td>{{ employee.role }}</td>
+            <td>
+              <button
+                class="btn btn-sm btn-warning mx-1"
+                type="button"
+                (click)="updateEmployeeByAdmin(employee.id)"
+              >
+                Update
+              </button>
+              <button
+                class="btn btn-sm btn-danger mx-1"
+                (click)="deleteEmployee(employee.id)"
+              >
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="addEmployeeModal"
+    tabindex="-1"
+    aria-labelledby="staticBackdropLabel"
+    aria-hidden="true"
+  >
+    <div class="row justify-content-center">
+      <div *ngIf="successMessage" class="alert alert-success text-center">
+        {{ successMessage }}
+      </div>
+      <div *ngIf="errorMessage" class="alert alert-danger text-center">
+        {{ errorMessage }}
+      </div>
+    </div>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg-primary">
+          <h5 class="modal-title w-100 text-center text-light">Add Employee</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            id="closeButton"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="addEmployeeForm" (ngSubmit)="onSubmit()">
+            <div class="form-group my-2 mx-3">
+              <label for="name" class="form-label">Name :</label>
+              <input
+                type="text"
+                class="form-control"
+                name="name"
+                id="name"
+                formControlName="name"
+              />
+              <span
+                class="small text-danger"
+                *ngIf="
+                  !addEmployeeForm.get('name')!.valid &&
+                  addEmployeeForm.get('name')!.touched
+                "
+                >Please enter a valid name !!</span
+              >
+            </div>
+            <div class="form-group my-2 mx-3">
+              <label for="emailId" class="form-label">Email :</label>
+              <input
+                type="text"
+                class="form-control"
+                name="emailId"
+                id="emailId"
+                formControlName="emailId"
+              />
+              <span
+                class="small text-danger"
+                *ngIf="
+                  !addEmployeeForm.get('emailId')!.valid &&
+                  addEmployeeForm.get('emailId')!.touched
+                "
+              >
+                please enter a valid email !!
+              </span>
+            </div>
+            <div class="form-group my-2 mx-3">
+              <label for="password" class="form-label">Password :</label>
+              <input
+                type="password"
+                class="form-control"
+                name="password"
+                id="password"
+                formControlName="password"
+              />
+              <span
+                class="small text-danger"
+                *ngIf="
+                  !addEmployeeForm.get('password')!.valid &&
+                  addEmployeeForm.get('password')!.touched
+                "
+                >Please enter a password !!</span
+              >
+            </div>
+            <div class="form-group my-2 mx-3">
+              <label for="role" class="form-label">Role :</label>
+              <div class="row">
+                <div class="col-auto">
+                  <div class="form-check">
+                    <input
+                      type="radio"
+                      class="form-check-input"
+                      name="role"
+                      id="user"
+                      value="user"
+                      formControlName="role"
+                    />
+                    <label for="user" class="form-check-label">User</label>
+                  </div>
+                </div>
+                <div class="col-auto">
+                  <div class="form-check">
+                    <input
+                      type="radio"
+                      class="form-check-input"
+                      name="role"
+                      id="admin"
+                      value="admin"
+                      formControlName="role"
+                    />
+                    <label for="admin" class="form-check-label">Admin</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group my-2 mx-3">
+              <button
+                type="submit"
+                class="btn btn-primary w-100"
+                [disabled]="!addEmployeeForm.valid"
+              >
+                Add
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

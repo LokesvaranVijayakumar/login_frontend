@@ -1,0 +1,45 @@
+<div class="row">
+  <div class="col">
+    <nav class="navbar navbar-expand-lg navbar-lg bg-info">
+      <div class="container">
+        <a href="" class="navbar-brand">Mini Project</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li
+              class="nav-item"
+              role="presentation"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+            >
+              <a class="nav-link" routerLink="/">Home</a>
+            </li>
+            <li class="nav-item" role="presentation" routerLinkActive="active">
+              <a class="nav-link" routerLink="login">Login</a>
+            </li>
+            <li class="nav-item" role="presentation" routerLinkActive="active">
+              <a class="nav-link" routerLink="signup">SignUp</a>
+            </li>
+            <li class="nav-item" role="presentation" routerLinkActive="active">
+              <a class="nav-link" routerLink="/">Contact Us</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <div class="col">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

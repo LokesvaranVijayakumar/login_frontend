@@ -1,0 +1,42 @@
+<div class="container">
+  <div class="row my-5">
+    <div class="col">
+      <h3 class="text-center mb-5">Employee Details</h3>
+      <table class="table table-light table-striped table-hover">
+        <thead class="table-dark">
+          <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Password</th>
+            <th>Role</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="employee">
+            <td>{{ employee.id }}</td>
+            <td>{{ employee.name }}</td>
+            <td>{{ employee.emailId }}</td>
+            <td>{{ employee.password }}</td>
+            <td>{{ employee.role }}</td>
+            <td>
+              <button
+                class="btn btn-sm btn-warning mx-1"
+                (click)="updateEmployee(employee.id)"
+              >
+                Update
+              </button>
+              <button
+                class="btn btn-sm btn-danger mx-1"
+                (click)="deleteEmployee(employee.id)"
+              >
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

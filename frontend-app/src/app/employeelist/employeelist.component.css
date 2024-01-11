@@ -1,0 +1,14 @@
+input.ng-invalid.ng-touched {
+  border: 1px solid red;
+}
+
+.successMessage {
+  color: green;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.alert {
+  margin: 10px 0 0 0;
+  width: 50%;
+}

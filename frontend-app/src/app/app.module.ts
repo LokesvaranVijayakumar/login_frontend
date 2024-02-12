@@ -17,15 +17,18 @@ import { UserdashboardComponent } from './userdashboard/userdashboard.component'
 import { AdmindashboardComponent } from './admindashboard/admindashboard.component';
 import { UpdateemployeeComponent } from './updateemployee/updateemployee.component';
 import { UpdateemployeebyadminComponent } from './updateemployeebyadmin/updateemployeebyadmin.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+import { NavbarComponent } from './navbar/navbar.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
-  { path: 'employeelist', component: EmployeelistComponent },
+  { path: 'employeelist/:id', component: EmployeelistComponent },
   { path: 'userdashboard/:id', component: UserdashboardComponent },
   { path: 'updateemployee/:id', component: UpdateemployeeComponent },
-  { path: 'admindashboard', component: AdmindashboardComponent },
+  { path: 'admindashboard/:id', component: AdmindashboardComponent },
   {
     path: 'updateemployeebyadmin/:id',
     component: UpdateemployeebyadminComponent,
@@ -43,6 +46,7 @@ const appRoutes: Routes = [
     AdmindashboardComponent,
     UpdateemployeeComponent,
     UpdateemployeebyadminComponent,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,6 +55,13 @@ const appRoutes: Routes = [
     ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      timeOut: 1500,
+      progressBar: true,
+      progressAnimation: 'increasing',
+      preventDuplicates: true,
+    }),
   ],
   providers: [provideClientHydration()],
   bootstrap: [AppComponent],

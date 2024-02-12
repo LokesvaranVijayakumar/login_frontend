@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Employee } from '../class/employee';
 import { EmployeeService } from '../services/employee.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-updateemployeebyadmin',
@@ -14,13 +15,12 @@ export class UpdateemployeebyadminComponent implements OnInit {
     private formBuilder: FormBuilder,
     private employeeService: EmployeeService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {}
   userId!: number;
   employee!: Employee;
   updateForm!: FormGroup;
-  successMessage: string = '';
-  errorMessage: string = '';
 
   ngOnInit(): void {
     this.employee = new Employee();
@@ -49,7 +49,7 @@ export class UpdateemployeebyadminComponent implements OnInit {
         .updateEmployeeByAdmin(this.userId, updatedData)
         .subscribe(
           (result) => {
-            this.successMessage = 'Employee Updated!';
+            this.toastr.success('Employee Updated!');
             console.log(result);
             setTimeout(() => {
               this.router.navigate(['employeelist']);
@@ -57,6 +57,7 @@ export class UpdateemployeebyadminComponent implements OnInit {
           },
           (error) => {
             console.error(error.error);
+            this.toastr.error(error.error);
           }
         );
     }

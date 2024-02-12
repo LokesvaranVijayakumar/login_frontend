@@ -9,7 +9,7 @@ import { Employee } from '../class/employee';
 export class EmployeeService {
   constructor(private http: HttpClient) {}
 
-  backendURL = 'http://localhost:8080/api';
+  backendURL = 'http://localhost:8082/api';
 
   getAllEmployees(): Observable<any> {
     return this.http.get(this.backendURL + '/employees');

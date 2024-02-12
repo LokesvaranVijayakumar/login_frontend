@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Employee } from '../class/employee';
 import { EmployeeService } from '../services/employee.service';
 import { error } from 'node:console';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-userdashboard',
@@ -13,7 +14,8 @@ export class UserdashboardComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private employeeService: EmployeeService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {}
 
   employee: any;
@@ -53,7 +55,13 @@ export class UserdashboardComponent implements OnInit {
   delete(id: number) {
     this.employeeService.deleteEmployee(id).subscribe((result) => {
       console.log(result);
-      this.router.navigate(['login']);
+      this.toastr.error(
+        'Redirecting to login page',
+        'User deleted successfull!'
+      );
+      setTimeout(() => {
+        this.router.navigate(['login']);
+      }, 2000);
     });
   }
 }

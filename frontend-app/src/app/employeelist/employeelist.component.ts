@@ -9,6 +9,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { __values } from 'tslib';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-employeelist',
@@ -20,16 +21,34 @@ export class EmployeelistComponent implements OnInit {
     private employeeService: EmployeeService,
     private router: Router,
     private formBuilder: FormBuilder,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private toastr: ToastrService
   ) {}
 
+  employee2: any;
   employee!: Employee[];
   employeeData: Employee = new Employee();
-  successMessage = '';
-  errorMessage = '';
+  userId!: number;
 
   ngOnInit(): void {
+    this.userId = this.route.snapshot.params['id'];
+
+    console.log('Id :' + this.userId);
+    this.getEmployee();
     this.getAllEmployees();
+  }
+
+  getEmployee() {
+    this.employeeService.getEmployeeById(this.userId).subscribe(
+      (result) => {
+        this.employee2 = result;
+
+        console.log(this.employee);
+      },
+      (error) => {
+        console.error(error.error);
+      }
+    );
   }
 
   getAllEmployees() {
@@ -52,6 +71,7 @@ export class EmployeelistComponent implements OnInit {
   delete(id: number) {
     this.employeeService.deleteEmployee(id).subscribe((result) => {
       console.log(result);
+      this.toastr.success(result);
       this.getAllEmployees();
     });
   }
@@ -73,31 +93,18 @@ export class EmployeelistComponent implements OnInit {
     this.employeeService.saveEmployee(this.employeeData).subscribe(
       (result) => {
         console.log(result);
-
-        this.successMessage = result;
+        this.toastr.success(result);
         this.addEmployeeForm.reset();
 
-        if (result === 'Employee created successfull!') {
-          setTimeout(() => {
-            this.successMessage = '';
-            document.getElementById('closeButton')?.click();
-            this.getAllEmployees();
-          }, 1000);
-        }
+        setTimeout(() => {
+          document.getElementById('closeButton')?.click();
+          this.getAllEmployees();
+        }, 1000);
       },
       (error: any) => {
         this.addEmployeeForm.reset();
         console.error(error.error);
-        this.errorMessage = error.error;
-
-        if (
-          error.error === 'EmailId Already Exists !' ||
-          error.error === 'Cannot create admin! Try as user'
-        ) {
-          setTimeout(() => {
-            this.errorMessage = '';
-          }, 1000);
-        }
+        this.toastr.error(error.error);
       }
     );
   }

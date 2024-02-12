@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Employee } from '../class/employee';
 import { EmployeeService } from '../services/employee.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-signup',
@@ -12,13 +13,11 @@ import { EmployeeService } from '../services/employee.service';
 export class SignupComponent {
   constructor(
     private router: Router,
-    private employeeService: EmployeeService
+    private employeeService: EmployeeService,
+    private toastr: ToastrService
   ) {}
 
   employee: Employee = new Employee();
-
-  successMessage: string = '';
-  errorMessage: string = '';
 
   signUpForm = new FormGroup({
     name: new FormControl('', [Validators.required]),
@@ -38,29 +37,17 @@ export class SignupComponent {
       (result) => {
         console.log(result);
 
-        this.successMessage = result;
+        this.toastr.success('Redirecting to login page', 'SignUp Success');
         this.signUpForm.reset();
 
-        if (result === 'Employee created successfull!') {
-          setTimeout(() => {
-            this.router.navigate(['login']);
-          }, 2000);
-        }
+        setTimeout(() => {
+          this.router.navigate(['login']);
+        }, 1500);
       },
       (error: any) => {
         this.signUpForm.reset();
         console.error(error.error);
-        this.errorMessage = error.error;
-
-        if (
-          error.error === 'EmailId Already Exists !' ||
-          error.error === 'Cannot create admin! Try as user'
-        ) {
-          setTimeout(() => {
-            this.errorMessage = '';
-            // window.location.reload();
-          }, 1000);
-        }
+        this.toastr.error(error.error);
       }
     );
   }
